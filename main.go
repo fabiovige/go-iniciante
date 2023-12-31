@@ -1,23 +1,28 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
 
-type endereco struct {
-	rua    string
-	numero int
-	cidade string
-}
+	"github.com/fabiovige/go-iniciante/model"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
-
-	endereco := endereco{
-		"Rua dos Bobos",
-		0,
-		"São Paulo",
+	endereco := model.Endereco{
+		Rua:    "Rua dos Bobos",
+		Numero: 0,
+		Cidade: "São Paulo",
 	}
 
-	fmt.Println(endereco)
-	endereco.numero = 449
-	fmt.Println(endereco)
+	pessoa := model.Pessoa{
+		Nome:           "Fabio",
+		Sobrenome:      "Vige",
+		Email:          "fabiovige@gmail.com",
+		Telefone:       "11999999999",
+		DataNascimento: time.Date(1976, 03, 02, 0, 0, 0, 0, time.Local),
+		Endereco:       endereco,
+	}
+
+	pessoa.CalculaIdade()
+	fmt.Println("Idade ", pessoa.Idade)
 }
