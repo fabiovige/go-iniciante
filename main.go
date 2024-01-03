@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -59,4 +60,53 @@ func main() {
 	} else {
 		fmt.Println("Compra: ", compra)
 	}
+
+	// implementação da interface error
+	ExibeErro(errors.New("novo erro de warning"))
+
+	p := ProblemaDeNetwork{
+		rede: false,
+		hardware: true,
+	}
+	ExibeErro(p)
+
+	// interface vazia
+
+	var lista []interface{}
+	lista = append(lista, "Fabio")
+	lista = append(lista, 1)
+	lista = append(lista, true)
+
+	for _, item := range lista {
+		fmt.Println(item)
+
+		v, ok := item.(string)
+		if ok {
+			fmt.Println("É uma string: ", v)
+		} else {
+			fmt.Println("Não é uma string")
+		}
+
+	}
+
+}
+
+type ProblemaDeNetwork struct {
+	rede bool
+	hardware bool
+}
+
+func (p ProblemaDeNetwork) Error() string {
+	problemas := ""
+	if p.rede {
+		problemas += "rede "
+	}
+	if p.hardware {
+		problemas += "hardware "
+	}
+	return problemas
+}
+
+func ExibeErro(err error) {
+	fmt.Println("Erro: ", err.Error())
 }
